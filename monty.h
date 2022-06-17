@@ -1,19 +1,9 @@
-#ifndef MONTY_HEADERS
-#define MONTY_HEADERS
+#ifndef MONTY_H
+#define MONTY_H
 
 #include <stdio.h>
-#include <fcntl.h>
 #include <stdlib.h>
-#include <unistd.h>
 #include <string.h>
-#include <ctype.h>
-
-#endif /* MONTY_HEADERS */
-
-#ifndef MONTY_STRUCT
-#define MONTY_STRUCT
-
-/* STRUCT #1 */
 
 /**
  * struct stack_s - doubly linked list representation of a stack (or queue)
@@ -31,8 +21,6 @@ typedef struct stack_s
 	struct stack_s *next;
 } stack_t;
 
-/* STRUCT #2 */
-
 /**
  * struct instruction_s - opcode and its function
  * @opcode: the opcode
@@ -47,49 +35,52 @@ typedef struct instruction_s
 	void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
 
-#endif /* MONTY_STRUCT */
-
-#ifndef VALIDATOR
-#define VALIDATOR
+/**
+ * enum stack_queue_mode - mode for queue and stack behavior
+ * @STACK: stack mode to push to top
+ * @QUEUE: queue mode to push to the end
+ */
+enum stack_queue_mode
+{
+	STACK,
+	QUEUE
+};
 
 /**
- * struct validator - return value of opcode and if list is stack or queue
- * @opcode: return value of opcode
- * @queue_value: 1 if list is a queue, 0 if list is a stack
+ * struct allocated_s - contains memory to free, push value and stack mode
+ * @n: integer value for the push opcode
+ * @token: tokenized opcode to free
+ * @mode: mode to format data to Stack(1) or Queue(0)
+ * @pScript: file pointer to Monty bytecode file
  */
-
-typedef struct validator
+typedef struct allocated_s
 {
-	int opcode;
-	int queue_value;
-} validator_t;
+	char *n;
+	char *token;
+	FILE *pScript;
+	enum stack_queue_mode mode;
+} allocated_t;
 
-extern validator_t rq;
+extern allocated_t mem;
+void execute_script(void);
+void stack_push(stack_t **stack, unsigned int line_number);
+void stack_pall(stack_t **stack, unsigned int line_number);
+void stack_pint(stack_t **stack, unsigned int line_number);
+void stack_pop(stack_t **stack, unsigned int line_number);
+void stack_swap(stack_t **stack, unsigned int line_number);
+void stack_add(stack_t **stack, unsigned int line_number);
+void stack_nop(stack_t **stack, unsigned int line_number);
+void stack_sub(stack_t **stack, unsigned int line_number);
+void stack_div(stack_t **stack, unsigned int line_number);
+void stack_mul(stack_t **stack, unsigned int line_number);
+void stack_mod(stack_t **stack, unsigned int line_number);
+void stack_pchar(stack_t **stack, unsigned int line_number);
+void stack_pstr(stack_t **stack, unsigned int line_number);
+void stack_rotl(stack_t **stack, unsigned int line_number);
+void stack_rotr(stack_t **stack, unsigned int line_number);
+void op_stack(stack_t **stack, unsigned int line_number);
+void op_queue(stack_t **stack, unsigned int line_number);
+void free_all(stack_t *stack);
+int isNum(char *str);
 
-#endif /* VALIDATOR */
-
-#ifndef FUNCTIONS
-#define FUNCTIONS
-
-char *find_co(char *line, stack_t **stack, unsigned int n_line);
-int isnumber(char *str);
-void add_node(stack_t **stack, int value);
-void add_node_end(stack_t **stack, int value);
-int check_opcode(char *command, stack_t **stack, size_t n_line);
-void kill_free(char *line, FILE *file, stack_t *stack);
-void kill_stack(stack_t *stack);
-void pall(stack_t **stack, unsigned int n_line);
-void pint(stack_t **stack, unsigned int n_line);
-void pop(stack_t **stack, unsigned int n_line);
-void swap(stack_t **stack, unsigned int n_line);
-void _div(stack_t **stack, unsigned int n_line);
-void add(stack_t **stack, unsigned int n_line);
-void sub(stack_t **stack, unsigned int n_line);
-void mul(stack_t **stack, unsigned int n_line);
-void mod(stack_t **stack, unsigned int n_line);
-void pchar(stack_t **stack, unsigned int n_line);
-void rotl(stack_t **stack, unsigned int n_line);
-void pstr(stack_t **stack, unsigned int n_line);
-void rotr(stack_t **stack, unsigned int n_line);
-
-#endif /* Functions */
+#endif

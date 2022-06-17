@@ -1,306 +1,77 @@
-# Monty Bytecodes Interpreter
+# Monty
+Monty is a Monty byte-code interpreter.
 
+## Prerequisites
+* Allowed editors: vi, vim, emacs
+* All files will be compiled on Ubuntu 14.04 LTS
+* Programs and functions will be compiled with gcc 4.8.4 using the flags -Wall -Werror -Wextra and -pedantic
+* All files should end with a new line
+* A README.md file, at the root of the folder of the project is mandatory
+* The code should use the Betty style. It will be checked using betty-style.pl and betty-doc.pl
+* Allowed to use a maximum of one global variable
+* No more than 5 functions per file
+* Allowed to use the C standard library
+* The prototypes of all your functions should be included in the header file called monty.h
+* All the header files should be include guarded
+* The repository monty should be added as a submodule to your holbertonschool-low_level_programming repository, under the name
 
-![enter image description here](https://lh3.googleusercontent.com/XmvRPsC57FqdwBUPmFjUlJQdwFgzBxbNLQ7AKewPcoKX5rrkmHvUUboWAZ-gIjsQslW2D6YF-G8 "monty")
-
-## [](https://github.com/TzStrikerYT/monty)Description
-
-An interpreter is a program that directly executes instructions written (one by one) in a script or a programming language, without being previously compiled into a machine language program as needed, normally in this process they do not save the result of such instruction translation, this differentiates it from assemblers and compilers.
-Monty 0.98 is a scripting language that is first compiled into Monty byte codes (Just like Python). It relies on a unique stack, with specific instructions to manipulate it. The goal of this project is to create an interpreter for Monty ByteCodes files.
-
-## Learning objectives
-
--   What do LIFO and FIFO mean.
--   What is a stack, and when to use it.
--   What is a queue and when to use it.
--   What are the common implementations of stacks and queues.
--   What are the most common use cases of stacks and queues.
--   What is the proper way to use global variables.
--   How to work with git submodules.
-
-![enter image description here](https://lh3.googleusercontent.com/zwiEUTcNY8JORqS1pM1patosede3xWcnUe4YHQ1B8tPj-rJW7w9JA4LLSEpeMOgZIgopJxKEyfk "stackqueue")
-
-
-**resources:** [https://www.geeksforgeeks.org/stack-data-structure-introduction-program/](https://www.geeksforgeeks.org/stack-data-structure-introduction-program/) 
-
-# Requirements
-## Installation
-
-Use the  [git clone](https://github.com/TzStrikerYT/monty.git) to install this repository
-```
-git clone https://github.com/TzStrikerYT/monty.git
-```
 ## Compilation
-
--   The code will be compiled this way (Installed gcc (GNU Compiler Collection) version 4.8.4 or newer.):
-```
-$ gcc -Wall -Werror -Wextra -pedantic *.c -o monty
-```
+`$ gcc -Wall -Werror -Wextra -pedantic *.c -o monty`
 
 ## Usage
-In the file descriptor you will find the definitions of opcode.
-* Implementing the push and pall opcodes:
+`$ ./monty <file_path>`
+
+## Example
 ```
-$ cat -e bytecodes/00.m
-push 1$
-push 2$
-push 3$
-pall$
+$ cat bytecodes/00.m
+push 1
+push 2
+push 3
+pall
 $ ./monty bytecodes/00.m
 3
 2
 1
-$
-```
-* Implementing the pint opcode:
-```
-$ cat bytecodes/06.m 
-push 1
-pint
-push 2
-pint
-push 3
-pint
-$ ./monty bytecodes/06.m 
-1
-2
-3
-$ 
-```
-* Implementing the pop opcode:
-```
-$ cat bytecodes/07.m 
-push 1
-push 2
-push 3
-pall
-pop
-pall
-pop
-pall
-pop
-pall
-$ ./monty bytecodes/07.m 
-3
-2
-1
-2
-1
-1
-$ 
-```
-* Implementing swap opcode:
-```
-$ cat bytecodes/09.m 
-push 1
-push 2
-push 3
-pall
-swap
-pall
-$ ./monty bytecodes/09.m 
-3
-2
-1
-2
-3
-1
-$
-```
-* Implementing add opcode:
-```
-$ cat bytecodes/12.m 
-push 1
-push 2
-push 3
-pall
-add
-pall
-
-$ ./monty bytecodes/12.m
-3
-2
-1
-5
-1
-$
-```
-* Implementing sub, div, mul, mod opcode:
-```
-$ cat bytecodes/19.m 
-push 1
-push 2
-push 10
-push 3
-sub
-pall
-$ ./monty bytecodes/19.m 
-7
-2
-1
-$
-``` 
-
-* Implementing pchar opcode:
-```
-$ cat bytecodes/28.m 
-push 72
-pchar
-$ ./monty bytecodes/28.m 
-H
-$
-```
-* Implementing pstr opcode:
-```
-$ cat bytecodes/31.m 
-push 1
-push 2
-push 3
-push 4
-push 0
-push 110
-push 0
-push 110
-push 111
-push 116
-push 114
-push 101
-push 98
-push 108
-push 111
-push 72
-pstr
-$ ./monty bytecodes/31.m 
-Holberton
-$ 
-```
-* Implementing rotl and rotr opcode:
-```
-$ cat bytecodes/35.m 
-push 1
-push 2
-push 3
-push 4
-push 5
-push 6
-push 7
-push 8
-push 9
-push 0
-pall
-rotl
-pall
-$ ./monty bytecodes/35.m 
-0
-9
-8
-7
-6
-5
-4
-3
-2
-1
-9
-8
-7
-6
-5
-4
-3
-2
-1
-0
-$
-```
-* Implementing stack and queue opcode:
-```
-$ cat bytecodes/47.m
-queue
-push 1
-push 2
-push 3
-pall
-stack
-push 4
-push 5
-push 6
-pall
-add
-pall
-queue
-push 11111
-add
-pall
-$ ./monty bytecodes/47.m
-1
-2
-3
-6
-5
-4
-1
-2
-3
-11
-4
-1
-2
-3
-15
-1
-2
-3
-11111
-$ 
-```
-* Implementing "holberton" (1000-holberton.bf) opcode:
-```
-$ bf 1000-holberton.bf 
-Holberton
-$ 
-``` 
-
-* Implementing "add tow digits" (1001-add.bf) opcode:
-```
-$ bf ./1001-add.bf
-81
-9$
 ```
 
-* Implementing "multiplication" (1002-mul.bf) opcode:
-```
-$ bf 1002-mul.bf
-24
-8$
-```
+## Available Opcodes
+| Opcodes	| Description	|
+| :-------:	| -----------	|
+| push		| pushes an element to the stack |
+| pall		| prints all the values in the stack |
+| pint		| prints the value at the top of the stack |
+| pop		| which removes the top element of the stack |
+| swap		| swaps the top two elements of the stack |
+| add		| adds the top two elements of the stack |
+| nop		| doesn't do anything |
+| sub		| subtracts the top element of the stack from the second top element |
+| div		| divides the second top element of the stack by the top element |
+| mul		| multiplies the second top element of the stack with the top element|
+| mod		| mods the second top element of the stack with the top element |
+| #		| treats the line as a comment |
+| pchar		| prints the char at the top of the stack |
+| pstr		| prints the string starting at the top of the stack |
+| rotl		| rotates the stack to the top |
+| rotr		| rotates the stack to the bottom |
+| stack		| sets the format of the data to a stack (LIFO) |
+| queue		| sets the format of the data to a queue (FIFO) |
 
-* Implementing "multiplication level up" (1003-mul.bf) opcode:
-```
-$ bf 1003-mul.bf 
-77
-49
-$ 
-```
+## Brainf*ck
+The `bf` folder contains the following Brainf*ck scripts
 
+| BF Scripts	| Description	|
+| :-------:	| -----------	|
+| 1000-holberton.bf	| prints Holberton |
+| 1001-add.bf		| reads two digits from stdin, add them, and print the result(one-digit) |
+| 1002-mul.bf		| reads two digits from stdin, multiply them, and print the result (one-digit) |
+| 1003-mul.bf		| reads two digits from stdin, multiply them, and print the result, followed by a new line |
 
-## File descriptor
+### Installation
+`$ sudo apt-get install bf`
 
-
-|file|description|
-|--|--|
-|*monty.h*|Contain the struct and prototypes to the monty interpreter|
-|*monty.c*|Contain the main function of the monty interpreter|
-|*killers.c*|Contain the functions that frees and exit the process in the monty interpreter.|
-|*funcs1.c*|Contain the content of the functions pall, pint, pop, swap and add of the monty interpreter.|
-|*funcs2.c*|Contain the content of the functions sub, div, mul, mod and pchar of the monty interpreter.|
-|*funcs3.c*|Contain the content of the functions pstr, rotl and rotr of the monty interpreter.|
-|*check_opcode.c*|Contain the function that check in the monty interpreter for found the command in it.|
-|*bf - brainfuck*|Contain brainfuck scripts (1000-holberton.bf, 1001-add.bf, 1002-mul.bf, 1003-mul.bf)|
-## Contribution
-This is a project for [Holberton School](https://www.holbertonschool.com/) by Holberton Students. Pull requests are welcome, if you found a bug, you can report us at the email: [1264@holbertonschool.com](mailto:1264@holbertonschool.com) or [970@holbertonschool.com](mailto:970@holbertonschool.com).
-Please make sure to update tests as appropriate.
+### Usage
+`$ bf <file_path>`
 
 ## Authors
--   [Michael Orlando Cocuy Garzon](https://github.com/TzStrikerYT) - 1264@holbertonschool.com
--   [Lady Marcela Sánchez Moreno](https://github.com/marcewp15) - 970@holbertonschool.com
+* [Marco Chan](https://github.com/inspiredtolive)
+* [Hanh Nguyen](https://github.com/hanhuyeny2k)
